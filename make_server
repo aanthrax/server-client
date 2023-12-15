@@ -1,0 +1,17 @@
+all : main_server.o sqlite3.o base_sqlite.o clients_bd.o
+	g++ main_server.o sqlite3.o base_sqlite.o clients_bd.o -g -Wall -o server
+
+main_server.o : main_server.cpp
+	g++ -c main_server.cpp -g
+
+sqlite3.o: sqlite3.c
+	gcc -g -c sqlite3.c
+
+base_sqlite.o: base_sqlite.cpp
+	g++ -g -c base_sqlite.cpp -Wall
+
+clients_bd.o: clients_bd.cpp
+	g++ -g -c clients_bd.cpp -Wall
+
+clean :
+	rm -rf *.o *.out server
