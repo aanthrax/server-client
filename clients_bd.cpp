@@ -30,6 +30,18 @@ int ClientsBD::getIdClient(const char* name){
 	return result;
 }
 
+std::vector<int> ClientsBD::getAllClientsId(){
+	std::vector<int> ret_vec;
+	sqlite3_stmt* statement = nullptr;
+	int status = sqlite3_prepare_v2(bd, "SELECT * FROM clients;", -1, &statement, nullptr);
+	assert(status == SQLITE_OK);
+	while(sqlite3_step(statement) == SQLITE_ROW){
+		ret_vec.push_back(sqlite3_column_int(statement, 0));
+	}
+	sqlite3_finalize(statement);
+	return ret_vec;
+}
+
 ClientsBD::ClientsBD(){
 	openBd("clients.bd");
 	dropTable("clients");

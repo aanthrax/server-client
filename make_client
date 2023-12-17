@@ -1,5 +1,5 @@
 all : main_client.o
-	g++ main_client.o -g -o client
+	g++ main_client.o -g -o client -lpthread
 
 main_client.o : main_client.cpp
 	g++ -c main_client.cpp -g

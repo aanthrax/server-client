@@ -9,7 +9,7 @@
 void* tr_send(void*);
 void* tr_recv(void*);
 
-int main() {
+int main(int argc, char** argv) {
 	std::cout << "simple client ver 1.0...." << std::endl;
 	
 	pthread_t thread_send;
@@ -20,8 +20,7 @@ int main() {
 
 	sockaddr_in addr;
 	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	std::cout << "127.0.0.1  " << inet_addr("127.0.0.1") << std::endl;;
-	addr.sin_port = htons(33001);
+	addr.sin_port = htons(atoi(argv[1]));
 	addr.sin_family = AF_INET;
 
 	int res = connect(id_socket, (sockaddr *)&addr, sizeof(addr));
@@ -30,9 +29,8 @@ int main() {
 	send(id_socket, "привет  你好  test", 64, 0);
 	pthread_create(&thread_send, nullptr, tr_send, &id_socket);
 	pthread_create(&thread_recv, nullptr, tr_recv, &id_socket);
-	
 	while(1){}
-	
+
 	close(id_socket);
 	return 0;
 }
